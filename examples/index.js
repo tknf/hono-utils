@@ -4,6 +4,9 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { useSession } from "../dist/session/index.js";
 
+/**
+ * @type { import("hono").Hono<import("../dist/session").SessionEnv, any> }
+ */
 const app = new Hono();
 
 const map = new Map();

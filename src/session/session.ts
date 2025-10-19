@@ -126,12 +126,7 @@ export function useSession<Data = SessionData, FlashData = Data>({
 	cookie: { name = "__sessionid", secret: _secret, ...cookie } = {},
 	storage: createStorage,
 }: SessionMiddlewareOptions<Data, FlashData>) {
-	return createMiddleware<{
-		Variables: SessionVariables<Data, FlashData>;
-		Bindings: {
-			SESSION_SECRET?: string;
-		};
-	}>(async (c, next) => {
+	return createMiddleware(async (c, next) => {
 		/**
 		 * Retrieve or generate session ID from/to signed cookie
 		 */
