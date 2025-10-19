@@ -43,13 +43,13 @@
 		"examples": "node examples/index.js"
 	},
 	"peerDependencies": {
-		"hono": "^4.0.0"
+		"hono": ">=4.0.0"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.2.6",
 		"@hono/node-server": "^1.19.5",
 		"@vitest/coverage-v8": "^3.2.4",
-		"hono": "^4.0.0",
+		"hono": "^4.10.1",
 		"tsdown": "^0.15.8",
 		"typescript": "^5.9.3",
 		"vitest": "^3.2.4"

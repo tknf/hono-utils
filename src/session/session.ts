@@ -72,6 +72,10 @@ export interface SessionVariables<Data = SessionData, FlashData = Data> {
 	storage: SessionStorage<Data, FlashData> | null;
 }
 
+export interface SessionEnv<Data = SessionData, FlashData = Data> {
+	Variables: SessionVariables<Data, FlashData>;
+}
+
 /**
  * Hono session middleware
  * Session data is stored in a user-defined storage and session ID is stored in a signed cookie
@@ -232,8 +236,4 @@ export function useSession<Data = SessionData, FlashData = Data>({
 			httpOnly: true,
 		});
 	});
-}
-
-declare module "hono" {
-	interface ContextVariableMap extends SessionVariables {}
 }
