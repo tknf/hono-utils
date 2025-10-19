@@ -1,0 +1,57 @@
+{
+	"name": "@tknf/hono-utils",
+	"version": "0.1.0",
+	"description": "Utility functions and middlewares for Hono.",
+	"keywords": [
+		"typescript",
+		"javascript",
+		"hono",
+		"server",
+		"app",
+		"utility",
+		"session"
+	],
+	"repository": {
+		"url": "https://github.com/tknf/hono-utils"
+	},
+	"publishConfig": {
+		"access": "public",
+		"registry": "https://registry.npmjs.org/"
+	},
+	"license": "MIT",
+	"author": "tknf <dev@tknf.net>",
+	"type": "module",
+	"exports": {
+		"./session": {
+			"types": "./dist/session/index.d.ts",
+			"import": "./dist/session/index.js",
+			"require": "./dist/session/index.cjs"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "tsdown",
+		"test": "vitest run",
+		"test:coverage": "vitest run --coverage",
+		"lint": "biome lint",
+		"format": "biome format",
+		"check": "biome check",
+		"typecheck": "tsc --noEmit",
+		"prepublishOnly": "npm run build && npm run typecheck && npm run check",
+		"examples": "node examples/index.js"
+	},
+	"peerDependencies": {
+		"hono": "^4.0.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.2.6",
+		"@hono/node-server": "^1.19.5",
+		"@vitest/coverage-v8": "^3.2.4",
+		"hono": "^4.0.0",
+		"tsdown": "^0.15.8",
+		"typescript": "^5.9.3",
+		"vitest": "^3.2.4"
+	}
+}
