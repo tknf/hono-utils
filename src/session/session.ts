@@ -1,8 +1,8 @@
-import type { Context } from "hono";
-import { getRuntimeKey } from "hono/adapter";
+import type { Context, MiddlewareHandler } from "hono";
 import { getSignedCookie, setSignedCookie } from "hono/cookie";
 import { createMiddleware } from "hono/factory";
 import type { CookieOptions } from "hono/utils/cookie";
+import { waitUntil } from "../utils/context";
 
 type FlashDataKey<Key extends string> = `__flash_${Key}__`;
 export function flash<Key extends string>(key: Key): FlashDataKey<Key> {
@@ -20,7 +20,7 @@ type FlashSessionData<Data, FlashData> = Partial<
 	}
 >;
 
-export type Session<Data = SessionData, FlashData = Data> = {
+export interface Session<Data = SessionData, FlashData = Data> {
 	/** Get session ID */
 	readonly id: () => string;
 	/** Get session data */
@@ -40,22 +40,22 @@ export type Session<Data = SessionData, FlashData = Data> = {
 	flash<Key extends keyof FlashData & string>(name: Key, value: FlashData[Key]): void;
 	/** Unset session value */
 	unset(name: keyof Data & string): void;
-};
+}
 
-export type SessionStorage<Data = SessionData, FlashData = Data> = {
+export interface SessionStorage<Data = SessionData, FlashData = Data> {
 	/** Read session data */
 	read: (sid: string) => Promise<FlashSessionData<Data, FlashData> | null>;
 	/** Create or update session data */
 	upsert: (sid: string, data: FlashSessionData<Data, FlashData>, expires?: Date) => Promise<void>;
 	/** Delete session data */
 	delete: (sid: string) => Promise<void>;
-};
+}
 
 type CreateSessionStorage<Data = SessionData, FlashData = Data> = (
 	c: Context
 ) => SessionStorage<Data, FlashData>;
 
-export type SessionMiddlewareOptions<Data = SessionData, FlashData = Data> = {
+export interface SessionMiddlewareOptions<Data = SessionData, FlashData = Data> {
 	/** Initial session data object */
 	initialData?: Partial<Data>;
 	/** Cookie options */
@@ -65,7 +65,7 @@ export type SessionMiddlewareOptions<Data = SessionData, FlashData = Data> = {
 	};
 	/** Function to create session storage */
 	storage: CreateSessionStorage<Data, FlashData>;
-};
+}
 
 export interface SessionVariables<Data = SessionData, FlashData = Data> {
 	session: Session<Data, FlashData>;
@@ -125,7 +125,7 @@ export function useSession<Data = SessionData, FlashData = Data>({
 	initialData = {},
 	cookie: { name = "__sessionid", secret: _secret, ...cookie } = {},
 	storage: createStorage,
-}: SessionMiddlewareOptions<Data, FlashData>) {
+}: SessionMiddlewareOptions<Data, FlashData>): MiddlewareHandler {
 	return createMiddleware(async (c, next) => {
 		/**
 		 * Retrieve or generate session ID from/to signed cookie
@@ -216,11 +216,7 @@ export function useSession<Data = SessionData, FlashData = Data>({
 			 * If the execution environment supports waitUntil, use it to ensure the operation
 			 * completes even after the response is sent
 			 */
-			if (getRuntimeKey() === "workerd") {
-				c.executionCtx.waitUntil(storage.upsert(sid, newData, expires));
-			} else {
-				await storage.upsert(sid, newData, expires);
-			}
+			await waitUntil(c, storage.upsert(sid, newData, expires));
 		}
 
 		/**

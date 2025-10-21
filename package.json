@@ -22,6 +22,11 @@
 	"author": "tknf <dev@tknf.net>",
 	"type": "module",
 	"exports": {
+		"./csrf": {
+			"types": "./dist/csrf/index.d.ts",
+			"import": "./dist/csrf/index.js",
+			"require": "./dist/csrf/index.cjs"
+		},
 		"./session": {
 			"types": "./dist/session/index.d.ts",
 			"import": "./dist/session/index.js",
