@@ -6,8 +6,6 @@
 [![Github Workflow Status](https://img.shields.io/github/actions/workflow/status/tknf/hono-utils/ci.yaml?branch=main)](https://github.com/tknf/hono-utils/actions)
 [![Github](https://img.shields.io/github/license/tknf/hono-utils)](https://github.com/tknf/hono-utils/blob/main/LICENSE)
 [![npm](https://img.shields.io/npm/v/@tknf/hono-utils)](https://www.npmjs.com/package/@tknf/hono-utils)
-[![npm bundle size](https://img.shields.io/bundlephobia/min/@tknf/hono-utils)](https://bundlephobia.com/package/@tknf/hono-utils)
-[![npm bundle size](https://img.shields.io/bundlephobia/minzip/@tknf/hono-utils)](https://bundlephobia.com/package/@tknf/hono-utils)
 [![Github commit activity](https://img.shields.io/github/commit-activity/m/tknf/hono-utils)](https://github.com/tknf/hono-utils/pulse)
 [![GitHub last commit](https://img.shields.io/github/last-commit/tknf/hono-utils)](https://github.com/tknf/hono-utils/commits/main)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/tknf/hono-utils)
