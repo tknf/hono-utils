@@ -21,4 +21,14 @@ export default defineConfig([
 		target: "es2020",
 		platform: "neutral",
 	},
+	// Validator (ESM/CJS)
+	{
+		entry: ["src/validator/index.ts"],
+		outDir: "dist/validator",
+		format: ["esm", "cjs"],
+		dts: true,
+		clean: true,
+		target: "es2020",
+		platform: "neutral",
+	},
 ]);
