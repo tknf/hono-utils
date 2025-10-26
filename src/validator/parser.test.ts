@@ -121,7 +121,10 @@ describe("sanitizeIssues", () => {
 
 	test("removes restricted fields from arktype issues while preserving prototype", () => {
 		class CustomIssue {
-			constructor(public data: Record<string, unknown>, public message: string) {}
+			constructor(
+				public data: Record<string, unknown>,
+				public message: string
+			) {}
 		}
 
 		const issue = new CustomIssue(
